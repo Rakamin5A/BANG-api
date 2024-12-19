@@ -24,8 +24,8 @@ const login = async (user) => {
         throw new Error('Username or password is incorrect')
     }
 
-    token = genToken({username: res[0].username, id: res[0].id})
-    return {token: token, id: res[0].id}
+    token = genToken({username: res[0].username, id: res[0].id_user})
+    return {token: token, id: res[0].id_user}
 }
 
 const getUser = async (id) => {
