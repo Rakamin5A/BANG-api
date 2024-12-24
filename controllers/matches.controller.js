@@ -35,8 +35,8 @@ const updateMatch = async(req, res) => {
 
 const getMatchByGameID = async (req, res) => {
     try {
-        const res = await service.getMatchByGameID(req.params.id)
-        return res.status(200).json(res)
+        const result = await service.getMatchByGameID(req.params.id)
+        return res.status(200).json(result)
     } catch(error) {
         return res.status(404).json({message: error.message})
     }
@@ -44,8 +44,8 @@ const getMatchByGameID = async (req, res) => {
 
 const getMatchByID = async (req, res) => {
     try {
-        const res = await service.getMatchByID(req.params.id)
-        return res.status(200).json(res)
+        const result = await service.getMatchByID(req.params.id)
+        return res.status(200).json(result)
     } catch(error) {
         return res.status(404).json({message: error.message})
     }
