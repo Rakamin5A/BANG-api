@@ -13,7 +13,20 @@ const createGame = async (game) => {
                 throw new Error("Player 2 not found")
             }
         }
-        await repo.createGame(game)
+        game.created_at = Date.now()
+        return await repo.createGame(game)
+    } catch(error) {
+        throw new Error(error.message)
+    }
+}
+
+const updateGame = async (req) => {
+    try {
+        const game_ = await repo.getGameByID(req.params.id)
+        if (!game_) {
+            throw new Error("Game not found")
+        }
+        return await repo.updateGame(req.body, req.params.id)
     } catch(error) {
         throw new Error(error.message)
     }
@@ -47,4 +60,4 @@ const getGameByID = async (id) => {
     }
 }
 
-module.exports = {createGame, getGameByUserID, getGameByID}
+module.exports = {createGame, getGameByUserID, getGameByID, updateGame}
