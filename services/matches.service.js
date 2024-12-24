@@ -24,7 +24,7 @@ const updateMatch = async (req, id) => {
         if (!user) {
             throw new Error("User not found")
         }
-        const game = await gameRepo.getGameByID(req.params.id)
+        const game = await gameRepo.getGameByID(req.body.id_game)
         if (!game) {
             throw new Error("Game not found")
         }
