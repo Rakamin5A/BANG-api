@@ -10,8 +10,8 @@ const createUser = async (user) => {
             res.rows[0].id_user
         ])
         return res.rows[0];
-    } catch {
-        throw new Error("DB Error Occurred")
+    } catch(error) {
+        throw new Error("DB Error Occurred: createUser " + error.message);
     }
 }
 
@@ -28,8 +28,8 @@ const getUser = async (id) => {
     try {
         const res = await pool.query('SELECT * FROM users WHERE id_user = $1', [id]);
         return res.rows[0];
-    } catch {
-        throw new Error("DB Error Occurred")
+    } catch(error) {
+        throw new Error("DB Error Occurred: getUser " + error.message)
     }
 }
 
