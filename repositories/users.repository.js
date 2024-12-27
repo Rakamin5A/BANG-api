@@ -33,4 +33,13 @@ const getUser = async (id) => {
     }
 }
 
-module.exports = {createUser, getUser, getUserByUsername}
+const getStats = async (id) => {
+    try {
+        const res = await pool.query("SELECT * FROM users_stats WHERE id_user = $1", [id])
+        return res.rows[0]
+    } catch(error) {
+        throw new Error("DB Error Occurred: getStats", error.message)
+    }
+}
+
+module.exports = {createUser, getUser, getUserByUsername, getStats}
