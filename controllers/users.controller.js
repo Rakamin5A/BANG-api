@@ -6,7 +6,7 @@ const registerSchema = joi.object({
     nama: joi.string().required(),
     password: joi.string().required(),
     avatar: joi.string(),
-    email: joi.email().required(),
+    email: joi.string().email().required(),
 })
 
 const loginSchema = joi.object({
