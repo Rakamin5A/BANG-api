@@ -9,6 +9,11 @@ const gameSchema = joi.object({
     score: joi.string()
 })
 
+const connectSchema = joi.object({
+    player_2: joi.number().required(),
+    id_game: joi.number().required(),
+})
+
 const createGame = async (req, res) => {
     try {
         const {err, value} = gameSchema.validate(req.body)
@@ -16,7 +21,7 @@ const createGame = async (req, res) => {
             return res.status(400).json({message: err.message})
         }
         const game = await service.createGame(value)
-        return res.status(201).json({message: "Game created", id: game.id_game})
+        return res.status(201).json({message: "Game created", id: game.id_game, code: game.game_code})
     } catch (error) {
         return res.status(400).json({message: error.message})
     }
@@ -35,6 +40,28 @@ const updateGame = async (req, res) => {
     }
 }
 
+const connectUser = async (req, res) => {
+    try {
+        const {err, value} = connectSchema.validate(req.body)
+        if (err) {
+            return res.status(400).json({message: err.message})
+        }
+        await service.connectUser(req)
+        return res.status(200).json({message: "User connected"})
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+}
+
+const getGameByGameCode = async (req, res) => {
+    try {
+        const game = await service.getGameByGameCode(req.params.code)
+        return res.status(200).json(game)
+    } catch (error) {
+        return res.status(404).json({message: error.message})
+    }
+}
+
 const getGameByUserID = async (req, res) => {
     try {
         const game = await service.getGameByUserID(req.user.id)
@@ -43,6 +70,7 @@ const getGameByUserID = async (req, res) => {
         return res.status(404).json({message: error.message})
     }
 }
+
 
 const getGameByID = async (req, res) => {
     try {
@@ -53,4 +81,4 @@ const getGameByID = async (req, res) => {
     }
 }
 
-module.exports = {createGame, getGameByUserID, getGameByID, updateGame}
+module.exports = {createGame, getGameByUserID, getGameByID, updateGame, connectUser, getGameByGameCode}
