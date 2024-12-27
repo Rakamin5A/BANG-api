@@ -14,6 +14,9 @@ const createGame = async (game) => {
             }
         }
         game.created_at = Date.now()
+        if (game.type === 'pvp_online') {
+            game.game_code = Math.floor(100000 + Math.random() * 900000)
+        }
         return await repo.createGame(game)
     } catch(error) {
         throw new Error(error.message)
@@ -48,6 +51,18 @@ const getGameByUserID = async (userID) => {
     }
 }
 
+const connectUser = async (req) => {
+    try {
+        const game_ = await repo.getGameByID(req.params.id)
+        if (!game_) {
+            throw new Error("Game not found")
+        }
+        return await repo.connectUser(req.body, req.params.id)
+    } catch(error) {
+        throw new Error(error.message)
+    }
+}
+
 const getGameByID = async (id) => {
     try {
         const res = await repo.getGameByID(id)
@@ -60,4 +75,16 @@ const getGameByID = async (id) => {
     }
 }
 
-module.exports = {createGame, getGameByUserID, getGameByID, updateGame}
+const getGameByGameCode = async (code) => {
+    try {
+        const res = await repo.getGameByGameCode(code)
+        if (!res) {
+            throw new Error("Game not found")
+        }
+        return res
+    } catch(error) {
+        throw new Error(error.message)
+    }
+}
+
+module.exports = {createGame, getGameByUserID, getGameByID, updateGame, connectUser, getGameByGameCode}
