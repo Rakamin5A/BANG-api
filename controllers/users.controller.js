@@ -17,7 +17,7 @@ const loginSchema = joi.object({
 const getUser = async (req, res) => {
     try {
         const user = await service.getUser(Number(req.user.id))
-        return res.status(200).json({id: user.id_user, username: user.username, avatar: user.avatar, nama: user.nama})
+        return res.status(200).json({id: user.id_user, username: user.username, avatar: user.avatar, nama: user.nama, stats: user.stats})
     } catch(error) {
         return res.status(404).json({message: "Not found"})
     }
