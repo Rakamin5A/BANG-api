@@ -53,11 +53,11 @@ const getGameByUserID = async (userID) => {
 
 const connectUser = async (req) => {
     try {
-        const game_ = await repo.getGameByID(req.params.id)
+        const game_ = await repo.getGameByID(req.body.id_game)
         if (!game_) {
             throw new Error("Game not found")
         }
-        return await repo.connectUser(req.body, req.params.id)
+        return await repo.connectUser(req.body.player_2, req.body.id_game)
     } catch(error) {
         throw new Error(error.message)
     }
