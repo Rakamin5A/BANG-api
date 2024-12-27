@@ -29,6 +29,7 @@ const updateGame = async (req) => {
         if (!game_) {
             throw new Error("Game not found")
         }
+        req.body.player_1 = game_.player_1
         return await repo.updateGame(req.body, req.params.id)
     } catch(error) {
         throw new Error(error.message)
