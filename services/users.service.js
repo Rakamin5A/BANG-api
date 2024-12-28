@@ -30,6 +30,8 @@ const login = async (user) => {
 
 const getUser = async (id) => {
     const user = await repo.getUser(id)
+    const stats = await repo.getStats(id)
+    user.stats = stats
     if(!user) {
         throw new Error("User not found")
     } else {
